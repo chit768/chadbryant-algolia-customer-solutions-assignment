@@ -1,32 +1,41 @@
 import algoliasearch from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
-import { searchBox, hits, pagination, refinementList } from 'instantsearch.js/es/widgets';
+import {
+  searchBox,
+  hits,
+  pagination,
+  refinementList,
+} from 'instantsearch.js/es/widgets';
 
+import discountCameraCategory from '../../scripts/discountCameraCategory';
 import resultHit from '../templates/result-hit';
 
 /**
  * @class ResultsPage
- * @description Instant Search class to display content on main page
+ * @description Instant Search class to display content on main page.
  */
 class ResultPage {
   constructor() {
     this._registerClient();
     this._registerWidgets();
     this._startSearch();
+    // Uncomment to run discount script
+    // discountCameraCategory();
   }
 
   /**
    * @private
    * Handles creating the search client and creating an instance of instant search
-   * @return {void}
+   * @returns {void}
    */
   _registerClient() {
     this._searchClient = algoliasearch(
       process.env.ALGOLIA_APP_ID,
-      process.env.ALGOLIA_API_KEY, {
+      process.env.ALGOLIA_API_KEY,
+      {
         headers: {
-          "X-Algolia-UserToken": "test-user-123"
-        }
+          'X-Algolia-UserToken': 'test-user-123',
+        },
       }
     );
 
@@ -44,7 +53,7 @@ class ResultPage {
   /**
    * @private
    * Adds widgets to the Algolia instant search instance
-   * @return {void}
+   * @returns {void}
    */
   _registerWidgets() {
     this._searchInstance.addWidgets([
@@ -74,7 +83,7 @@ class ResultPage {
   /**
    * @private
    * Starts instant search after widgets are registered
-   * @return {void}
+   * @returns {void}
    */
   _startSearch() {
     this._searchInstance.start();
