@@ -23,12 +23,21 @@ class ResultPage {
   _registerClient() {
     this._searchClient = algoliasearch(
       process.env.ALGOLIA_APP_ID,
-      process.env.ALGOLIA_API_KEY
+      process.env.ALGOLIA_API_KEY, {
+        headers: {
+          "X-Algolia-UserToken": "test-user-123"
+        }
+      }
     );
 
     this._searchInstance = instantsearch({
       indexName: process.env.ALGOLIA_INDEX,
       searchClient: this._searchClient,
+      insights: {
+        insightsInitParams: {
+          useCookie: true,
+        },
+      },
     });
   }
 
